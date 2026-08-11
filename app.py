@@ -2,7 +2,12 @@ import streamlit as st
 import pytesseract
 import cv2
 import numpy as np
+import os
+import sys
 from PIL import Image
+
+# Ensure Streamlit Cloud can resolve local imports properly
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from utils.parser import generate_free_label, free_parse_text
 
 st.set_page_config(page_title="Spirits Label Parser", page_icon="🥃", layout="centered")
@@ -18,17 +23,31 @@ with tab1:
     ctype = st.text_input("Class/Type Field", "Kentucky Straight Bourbon Whiskey")
     alcohol = st.text_input("Alcohol Content Field", "45% Alc./Vol. (90 Proof)")
     net = st.text_input("Net Contents Field", "750 mL")
+    
+    # NEW Dropdown to select the mock label format
+    label_choice = st.selectbox(
+        "Select Label Style to Generate", 
+        ["Front Label", "Back Label", "Neck Strip"]
+    )
+    
+    type_mapping = {
+        "Front Label": "FRONT",
+        "Back Label": "BACK",
+        "Neck Strip": "NECK"
+    }
+    chosen_type = type_mapping[label_choice]
 
     if st.button("Generate & Store Label Image"):
-        img = generate_free_label(brand, ctype, alcohol, net)
+        # Passes the dropdown choice to the generator
+        img = generate_free_label(brand, ctype, alcohol, net, label_type=chosen_type)
         st.session_state['cached_label'] = img
-        st.image(img, caption="Generated Mock Label Preview", width=350)
+        st.image(img, caption=f"Generated Mock {label_choice} Preview", width=350)
         st.success("Mock image loaded into memory! Switch to Tab 2 to scan it.")
 
 with tab2:
     st.subheader("Process & Structure Label Information")
     source_choice = st.radio("Select Image Source:", ["Use Generated Label from Tab 1", "Upload a Real Label Image File"])
-
+    
     target_img = None
     if source_choice == "Use Generated Label from Tab 1":
         if 'cached_label' in st.session_state:
@@ -39,10 +58,10 @@ with tab2:
         uploaded_file = st.file_uploader("Upload PNG/JPG Label", type=["png", "jpg", "jpeg"])
         if uploaded_file:
             target_img = Image.open(uploaded_file)
-
+            
     if target_img:
         st.image(target_img, caption="Selected Target Image", width=300)
-
+        
         if st.button("Run Text Analysis Pipeline"):
             with st.spinner("Executing CV processing and OCR extraction..."):
                 cv_img = cv2.cvtColor(np.array(target_img), cv2.COLOR_RGB2BGR)
