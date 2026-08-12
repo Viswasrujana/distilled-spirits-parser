@@ -4,62 +4,51 @@ A 100% free tool designed to dynamically generate mock compliance labels (Front,
 
 ---
 
-## 🚀 Quick Start (Local Setup)
+## 🚀 Quick Start (Windows Setup via Cmd)
 
-Follow these steps to run the complete web application on your local machine.
+Follow these exact steps to set up and run the complete web application on Windows using native Command Prompt (`cmd.exe`).
 
-### 1. Prerequisites
+### 1. Prerequisites (Free Tools Only)
 
-Before installing Python dependencies, your operating system needs **Tesseract OCR** installed to power the text recognition engine.
+Before installing Python dependencies, your system needs **Tesseract OCR** installed to power the text recognition engine.
 
-*   **macOS** (via Homebrew):
-    ```bash
-    brew install tesseract
-    ```
-*   **Windows**:
-    1. Download the installer from [UB Mannheim Tesseract Git](https://github.com).
-    2. Run the `.exe` installer.
-    3. Add the installation folder (usually `C:\Program Files\Tesseract-OCR`) to your system's **Environment PATH Variables**.
-*   **Linux (Ubuntu/Debian)**:
-    ```bash
-    sudo apt-get update
-    sudo apt-get install tesseract-ocr libtesseract-dev
-    ```
+1. Download the free Windows installer from [UB Mannheim Tesseract Git](https://github.com).
+2. Run the `.exe` installer. Note the installation path (usually `C:\Program Files\Tesseract-OCR`).
+3. Open **Command Prompt** as Admin and run this command to permanently add Tesseract to your Windows system Environment PATH variable:
+   ```cmd
+   setx /M PATH "%PATH%;C:\Program Files\Tesseract-OCR"
+   ```
+4. Restart your Command Prompt for the path variable changes to take effect.
 
-### 2. Clone the Repository
-Navigate to your desired directory in your terminal and clone the repository:
-```bash
+### 2. Clone the Repository via Git
+Open your Command Prompt, navigate to your working directory, and use Git to pull down the source code from GitHub:
+```cmd
 git clone https://github.com
 cd distilled-spirits-parser
 ```
 
-### 3. Create a Virtual Environment
-It is highly recommended to isolate your project dependencies:
-```bash
-# Create the environment
+### 3. Create & Activate a Python Virtual Environment
+Keep your workspace clean by isolating dependencies directly through `Cmd`:
+```cmd
+rem Create the environment
 python -m venv venv
 
-# Activate it (Mac/Linux)
-source venv/bin/activate
-
-# Activate it (Windows PowerShell)
-.\venv\Scripts\Activate.ps1
+rem Activate the environment on Windows
+call venv\Scripts\activate.bat
 ```
 
 ### 4. Install Dependencies
-Install all required libraries using the package manager:
-```bash
+Install all required libraries using the Python package manager:
+```cmd
 pip install -r requirements.txt
 ```
 
-*Note: Ensure your `requirements.txt` includes: `streamlit`, `pytesseract`, `opencv-python-headless`, `numpy`, and `Pillow`.*
-
-### 5. Launch the App
-Run the local development server:
-```bash
+### 5. Launch the App Locally
+Run the local Streamlit development server:
+```cmd
 streamlit run app.py
 ```
-Your browser should open automatically to `http://localhost:8501`.
+Your default web browser should open automatically to `http://localhost:8501`.
 
 ---
 
@@ -96,15 +85,28 @@ distilled-spirits-parser/
 
 ---
 
-## ☁️ Deploying to Streamlit Cloud
+## ☁️ Deploying to Streamlit Cloud (OAuth Workspace)
 
-To host this live on the web for free via Streamlit Community Cloud:
+To host this app live on the web using Streamlit's free cloud environment and third-party GitHub OAuth integration:
 
-1. Push your updated code structure to a public repository on GitHub.
-2. Ensure you have a `packages.txt` file at your root directory containing exactly this line so the cloud server installs the system-level OCR engine:
-   ```text
-   tesseract-ocr
-   ```
-3. Go to [share.streamlit.io](https://streamlit.io) and log in with your GitHub account.
-4. Click **New app**, select your `distilled-spirits-parser` repository, the branch, and set your main file path to `app.py`.
-5. Click **Deploy!**
+### 1. Configure Cloud Dependencies
+Because the live app runs on a Linux cloud server, you must ensure a file named `packages.txt` exists at your root directory. It must contain exactly this single line to trigger the automatic installation of the cloud OCR engine:
+```text
+tesseract-ocr
+```
+
+### 2. Push Changes via Git
+Commit and sync your local updates to your GitHub repository:
+```cmd
+git add .
+git commit -m "Configure dropdown labels and windows setup documentation"
+git push origin main
+```
+
+### 3. Connect via Streamlit Dashboard Admin Portal
+1. Navigate to the [Streamlit Community Cloud Admin Console](https://streamlit.io).
+2. Log in using the **Continue with GitHub** OAuth application authentication workflow.
+3. Once authenticated as the Workspace Admin, click **New app** in the upper-right corner.
+4. Select your `distilled-spirits-parser` repository from the dropdown menu.
+5. Set the Main file path text box field to `app.py`.
+6. Click **Deploy!** The dashboard environment will spin up a container and open your public project link.
