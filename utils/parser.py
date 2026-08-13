@@ -24,11 +24,11 @@ def generate_free_label(brand, class_type, alcohol, net_contents, label_type="FR
         d.line([(30, 110), (470, 110)], fill="black", width=1)
         d.text((30, 130), "GOVERNMENT WARNING:", fill='black')
         warning_text = (
-            "(1) According to the Surgeon General, women should not\n"
-            "drink alcoholic beverages during pregnancy because of the\n"
-            "risk of birth defects. (2) Consumption of alcoholic\n"
-            "beverages impairs your ability to drive a car or operate\n"
-            "machinery, and may cause health problems."
+            "(1) ACCORDING TO THE SURGEON GENERAL, WOMEN SHOULD NOT\n"
+            "DRINK ALCOHOLIC BEVERAGES DURING PREGNANCY BECAUSE OF THE\n"
+            "RISK OF BIRTH DEFECTS. (2) CONSUMPTION OF ALCOHOLIC\n"
+            "BEVERAGES IMPAIRS YOUR ABILITY TO DRIVE A CAR OR OPERATE\n"
+            "MACHINERY, AND MAY CAUSE HEALTH PROBLEMS."
         )
         d.text((30, 160), warning_text, fill='gray')
         
