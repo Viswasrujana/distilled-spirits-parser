@@ -18,7 +18,7 @@ st.write("A 100% free tool to mock synthetic labels and parse out core TTB infor
 tab1, tab2 = st.tabs(["🎯 1. Generate Free Test Label", "🔍 2. Run OCR & Parser Pipeline"])
 
 with tab1:
-  st.subheader("Generate Synthetic Label Dataset")
+    st.subheader("Generate Synthetic Label Dataset")
 
     sample_labels = {
         "OLD TOM DISTILLERY": {
@@ -86,26 +86,39 @@ with tab1:
         sample["net"]
     )
 
-    
-    # NEW Dropdown to select the mock label format
     label_choice = st.selectbox(
-        "Select Label Style to Generate", 
+        "Select Label Style to Generate",
         ["Front Label", "Back Label", "Neck Strip"]
     )
-    
+
     type_mapping = {
         "Front Label": "FRONT",
         "Back Label": "BACK",
         "Neck Strip": "NECK"
     }
+
     chosen_type = type_mapping[label_choice]
 
     if st.button("Generate & Store Label Image"):
-        # Passes the dropdown choice to the generator
-        img = generate_free_label(brand, ctype, alcohol, net, label_type=chosen_type)
-        st.session_state['cached_label'] = img
-        st.image(img, caption=f"Generated Mock {label_choice} Preview", width=350)
-        st.success("Mock image loaded into memory! Switch to Tab 2 to scan it.")
+        img = generate_free_label(
+            brand,
+            ctype,
+            alcohol,
+            net,
+            label_type=chosen_type
+        )
+
+        st.session_state["cached_label"] = img
+
+        st.image(
+            img,
+            caption=f"Generated Mock {label_choice} Preview",
+            width=350
+        )
+
+        st.success(
+            "Mock image loaded into memory! Switch to Tab 2 to scan it."
+        )
 
 with tab2:
     st.subheader("Process & Structure Label Information")
