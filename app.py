@@ -18,11 +18,74 @@ st.write("A 100% free tool to mock synthetic labels and parse out core TTB infor
 tab1, tab2 = st.tabs(["🎯 1. Generate Free Test Label", "🔍 2. Run OCR & Parser Pipeline"])
 
 with tab1:
-    st.subheader("Generate Synthetic Label Dataset")
-    brand = st.text_input("Brand Name Field", "OLD TOM DISTILLERY")
-    ctype = st.text_input("Class/Type Field", "Kentucky Straight Bourbon Whiskey")
-    alcohol = st.text_input("Alcohol Content Field", "45% Alc./Vol. (90 Proof)")
-    net = st.text_input("Net Contents Field", "750 mL")
+  st.subheader("Generate Synthetic Label Dataset")
+
+    sample_labels = {
+        "OLD TOM DISTILLERY": {
+            "brand": "OLD TOM DISTILLERY",
+            "ctype": "Kentucky Straight Bourbon Whiskey",
+            "alcohol": "45% Alc./Vol. (90 Proof)",
+            "net": "750 mL"
+        },
+        "RIVERSTONE RESERVE": {
+            "brand": "RIVERSTONE RESERVE",
+            "ctype": "Tennessee Whiskey",
+            "alcohol": "40% Alc./Vol. (80 Proof)",
+            "net": "1 L"
+        },
+        "SILVER CREST": {
+            "brand": "SILVER CREST",
+            "ctype": "London Dry Gin",
+            "alcohol": "47% Alc./Vol. (94 Proof)",
+            "net": "750 mL"
+        },
+        "HARBOR OAK": {
+            "brand": "HARBOR OAK",
+            "ctype": "Aged Rum",
+            "alcohol": "43% Alc./Vol. (86 Proof)",
+            "net": "700 mL"
+        },
+        "MOUNTAIN PEAK DISTILLING CO.": {
+            "brand": "MOUNTAIN PEAK DISTILLING CO.",
+            "ctype": "Single Malt Whiskey",
+            "alcohol": "50% Alc./Vol. (100 Proof)",
+            "net": "375 mL"
+        },
+        "BLACK RIDGE BOURBON": {
+            "brand": "BLACK RIDGE BOURBON",
+            "ctype": "Kentucky Straight Bourbon Whiskey",
+            "alcohol": "46% Alc./Vol. (92 Proof)",
+            "net": "750 mL"
+        }
+    }
+
+    selected_label = st.selectbox(
+        "Select Sample Label",
+        list(sample_labels.keys())
+    )
+
+    sample = sample_labels[selected_label]
+
+    brand = st.text_input(
+        "Brand Name Field",
+        sample["brand"]
+    )
+
+    ctype = st.text_input(
+        "Class/Type Field",
+        sample["ctype"]
+    )
+
+    alcohol = st.text_input(
+        "Alcohol Content Field",
+        sample["alcohol"]
+    )
+
+    net = st.text_input(
+        "Net Contents Field",
+        sample["net"]
+    )
+
     
     # NEW Dropdown to select the mock label format
     label_choice = st.selectbox(
